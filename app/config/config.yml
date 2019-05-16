@@ -1,0 +1,237 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/parameters.yml" }
+    - { resource: "@MediaBundle/Resources/config/services.yml" }
+    - { resource: "@MediaBundle/Resources/config/parameters.yml" }
+    - { resource: "@BlogBundle/Resources/config/services.yml" }
+    - { resource: "@BlogBundle/Resources/config/parameters.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@ExpertiseBundle/Resources/config/services.yml" }
+    - { resource: "@InventoryBundle/Resources/config/services.yml" }
+    - { resource: "@SaleBundle/Resources/config/services.yml" }
+    - { resource: "@AppBundle/Resources/config/parameters.yml" }
+    - { resource: "@NewsletterBundle/Resources/config/services.yml" }
+    - { resource: "@StaticBundle/Resources/config/services.yml" }
+    - { resource: "@SchedulingBundle/Resources/config/services.yml" }
+    - { resource: "@CollaborativeBundle/Resources/config/services.yml" }
+    - { resource: "@CalendarBundle/Resources/config/services.yml" }
+    - { resource: "@BookletBundle/Resources/config/services.yml" }
+    - { resource: "@CharityBundle/Resources/config/services.yml" }
+    - { resource: "@LearningBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+
+framework:
+    #esi:             ~
+    default_locale: fr
+    translator:
+        fallbacks: ["%locale%"]
+
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+    assets:
+        version: 'v5'
+        version_format: '%%s?version=%%s'
+        base_path: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.root_dir%/../web': template
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    # bundles:        [AppBundle]
+    java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        # yui_js:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+        # yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+            # metadata_cache_driver: apc
+        result_cache_driver: 
+            type: memcached
+            host: localhost
+            port: 11211
+            instance_class: Doctrine\Common\Cache\MemcachedCache
+        query_cache_driver:
+            type:                 array # Required
+            host:                 ~
+            port:                 ~
+            instance_class:       ~
+            class:                ~
+            namespace:            ~
+#        mappings:
+#            translatable:
+#                type: annotation
+#                is_bundle: false
+#                prefix: Gedmo\Translatable\Entity
+#                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+#                alias: GedmoTranslatable
+#            gedmo_translator:
+#                type: annotation
+#                prefix: Gedmo\Translator\Entity
+#                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+#                alias: GedmoTranslator # (optional) it will default to the name set for the mapping
+#                is_bundle: false
+#
+#stof_doctrine_extensions:
+#    default_locale: "%locale%"
+#    translation_fallback: true
+#    orm:
+#        default:
+##            tree: true
+#            translatable: true
+#            sluggable: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+# Knp Paginator
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+# Fos JS Routing
+fos_js_routing:
+    routes_to_expose: [admin_media_files, admin_media_files_in_modal, admin_media_upload, admin_calendar_moments]
+# Liip
+liip_imagine :
+
+    # configure resolvers
+    resolvers :
+
+        # setup the default resolver
+        default :
+
+            # use the default web path
+            web_path : ~
+
+    # your filter sets are defined here
+    filter_sets :
+
+        # use the default cache configuration
+        cache : ~
+        
+        # the name of the "filter set"
+        logo_thumb :
+
+            # adjust the image quality to 75%
+            quality : 100
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [50, 50], mode : outbound }
+        
+        # the name of the "filter set"
+        product_small :
+
+            # adjust the image quality to 75%
+            quality : 100
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [400, 400], mode : outbound }
+        
+        # the name of the "filter set"
+        product_thumb :
+
+            # adjust the image quality to 75%
+            quality : 100
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [95, 60], mode : outbound }
+
+        # the name of the "filter set"
+        thumb :
+
+            # adjust the image quality to 75%
+            quality : 100
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [95, 60], mode : outbound }
+
+# Admin Configuration
+admin:
+    website_name: Puzzle
+    website_desc: Puzzle admin website
+    website_email: team@puzzle.com
+    time_format: "H:i"
+    date_format: "d-m-Y"
+    modules_available: 'user,media,blog,calendar,newsletter,contact,expertise,static'

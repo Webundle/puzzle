@@ -1,0 +1,82 @@
+app_sale_cart:
+    path:     /store/cart
+    defaults: { _controller: AppBundle:Sale:showCart }
+
+app_sale_cart_quick_view:
+    path:     /store/cart/quick-vew
+    defaults: { _controller: AppBundle:Sale:showCartQuickView }
+
+app_sale_cart_empty:
+    path:     /store/cart/empty
+    defaults: { _controller: AppBundle:Sale:emptyCart }
+
+app_sale_cart_add_product:
+    path:     /store/cart/add-product
+    defaults: { _controller: AppBundle:Sale:addProductToCart }
+    methods: POST
+
+app_sale_cart_update_product_form:
+    path:     /store/cart/lines/{id}/update-form
+    defaults: { _controller: AppBundle:Sale:updateProductToCartForm }
+
+app_sale_cart_update_product_callback:
+    path:     /store/cart/lines/{id}/update-callback
+    defaults: { _controller: AppBundle:Sale:updateProductToCartCallback }
+    methods: POST
+
+app_sale_cart_remove_product:
+    path:     /store/cart/lines/{id}/remove
+    defaults: { _controller: AppBundle:Sale:removeProductToCart }
+
+
+
+app_sale_commands:
+    path:     /store/commands
+    defaults: { _controller: AppBundle:Sale:showCommands }
+
+app_sale_command:
+    path:     /store/commands/{id}
+    defaults: { _controller: AppBundle:Sale:showCommand }
+
+app_sale_command_create_form:
+    path:     /store/cart/checkout-form
+    defaults: { _controller: AppBundle:Sale:createCommandForm }
+
+app_sale_command_preview:
+    path:     /store/cart/checkout-prevuew
+    defaults: { _controller: AppBundle:Sale:showCommandPreview}
+
+app_sale_command_create_callback:
+    path:     /store/cart/checkout-callback
+    defaults: { _controller: AppBundle:Sale:createCommandCallback }
+    methods: POST
+
+app_sale_command_recreate:
+    path:     /store/commands/{id}/re-create
+    defaults: { _controller: AppBundle:Sale:reCreateCommand }
+
+app_sale_coupons:
+    path:     /store/coupons
+    defaults: { _controller: AppBundle:Sale:showCoupons }
+
+app_sale_coupon:
+    path:     /store/coupons/{id}
+    defaults: { _controller: AppBundle:Sale:showCoupon }
+
+app_sale_shippings:
+    path:     /store/shippings
+    defaults: { _controller: AppBundle:Sale:showShippings }
+
+app_sale_shipping:
+    path:     /store/shippings/{id}
+    defaults: { _controller: AppBundle:Sale:showShipping }
+
+
+app_sale_payments:
+    path:     /store/payments
+    defaults: { _controller: AppBundle:Sale:showPayments }
+
+app_sale_payment:
+    path:     /store/payments/{id}
+    defaults: { _controller: AppBundle:Sale:showPayment }
+

@@ -1,0 +1,24 @@
+{% if moments is not empty %}
+	<div class="sidebar-widget">
+		{#<h5 class="mb-20">{{ moments|first.title }}</h5>#}
+		<img src="{{ moments|first.title }}" class="img-responsive" />
+	</div>
+	{% if moments|length > 1 %}
+		<div class="sidebar-widget">
+			{% for moment in moments %}
+				{% if moment != moments|first %}
+				<div class="recent-post clearfix">
+					<div class="recent-post-image">
+						<img src="{{ moment.picture }}" class="img-responsive" />
+					</div>
+					<div class="recent-post-info">
+						<a href="#">{{ moment.title }}</a> <span><i
+							class="fa fa-calendar-o"></i> {{ moment.startedAt|date('d M Y H:i') }}</span>
+					</div>
+				</div>
+				{% endif  %}
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endif %}
+				

@@ -1,0 +1,58 @@
+# Group
+admin_contact_groups:
+    path:     /groups
+    defaults: { _controller: ContactBundle:Group:showList }
+    
+admin_contact_group_create:
+    path:     /groups/create
+    defaults: { _controller: ContactBundle:Group:create }
+
+admin_contact_group:
+    path:     /groups/{id}
+    defaults: { _controller: ContactBundle:Group:show }
+    
+admin_contact_group_update:
+    path:     /groups/{id}/update
+    defaults: { _controller: ContactBundle:Group:update }
+
+admin_contact_group_remove:
+    path:     /groups/{id}/remove
+    defaults: { _controller: ContactBundle:Group:remove }
+    
+admin_contact_groups_remove:
+    path:     /groups/remove/list
+    defaults: { _controller: ContactBundle:Group:removeList }
+
+# Contact
+admin_contacts:
+    path:     /contacts
+    defaults: { _controller: ContactBundle:Contact:showList }
+    
+admin_contact_create:
+    path:     /contacts/create
+    defaults: { _controller: ContactBundle:Contact:create }
+
+admin_contact_import:
+    path:     /contacts/import
+    defaults: { _controller: ContactBundle:Contact:import }
+    
+admin_contact_export:
+    path:     /contacts/export
+    defaults: { _controller: ContactBundle:Contact:export }
+    
+admin_contact:
+    path:     /contacts/{id}
+    defaults: { _controller: ContactBundle:Contact:show }
+
+admin_contact_update:
+    path:     /contacts/{id}/update
+    defaults: { _controller: ContactBundle:Contact:update }
+
+admin_contact_remove:
+    path:     /contacts/{id}/remove
+    defaults: { _controller: ContactBundle:Contact:remove }
+    
+admin_contacts_remove:
+    path:     /contacts/remove/list
+    defaults: { _controller: ContactBundle:Contact:removeList }
+    

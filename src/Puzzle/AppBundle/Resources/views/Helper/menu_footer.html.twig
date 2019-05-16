@@ -1,0 +1,39 @@
+{%  if menu is not empty %}
+    <div class="container">
+        <div class="row" style="font-size:10pt;color:white" id="lien_utiles">
+            {% for menuItem in menuItems %}
+                {% if menuItem.page is not empty %}
+                    {% set translatable = translation_translatable(menuItem.page) %}
+                    {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                    {% set path = url('app_static_page', {'slug' : translation(translatable, locale, 'slug')|default(menuItem.page.slug)}) %}
+                {% else %}
+                    {% set path = "#" %}
+                {% endif %}
+                
+                {% set translatable = translation_translatable(menuItem) %}
+                {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                {% set name = translation(translatable, locale, 'name')|default(menuItem.name) %}
+
+                <div class="col-md-2">
+                    <a href="{{ path }}"><font color="white"><strong>{{ name|upper }}</strong></font></a><br><br>
+                    {% for child in menuItem.childs %}
+                        {% if child.page is not empty %}
+                            {% set translatable = translation_translatable(child.page) %}
+                            {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                            {% set path = url('app_static_page', {'slug' : translation(translatable, locale, 'slug')|default(child.page.slug)}) %}
+                        {% else %}
+                            {% set path = "#" %}
+                        {% endif %}
+                        
+                        {% set translatable = translation_translatable(child) %}
+                        {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                        {% set name = translation(translatable, locale, 'name')|default(child.name) %}
+                        
+                        <a href="{{ path }}">{{ child.name }}</a>
+                        <br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

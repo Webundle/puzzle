@@ -1,0 +1,64 @@
+{% extends "AppBundle::default.html.twig" %}
+
+{% block title %}{{parent()}} - Mon Profil{% endblock %}
+
+{% set activeNav="" %}
+
+{% block content %}
+	<!-- Cart Start -->
+    <section id="cart" class="m-t-110 m-b-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12">
+                        <div class="heading m-b-55 border_b">
+                            <h2>VOTRE COMPTE / <span class="color_red">PROFIL</span></h2>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div class="solution_tabs">
+                                <ul>
+                                    <li class="active"> <a href="{{url('app_account_show_profile')}}">Profil</a></li>
+                                    <li> <a href="{{url('app_account_show_credentials')}}">Connexion</a></li>
+                                    <li> <a href="{{url('app_account_show_addresses')}}">Adresses</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <form action="{{ url('app_account_update_profile')}}" method="POST">
+                                <div class="single-query">
+                                    <label for="first_name">Nom</label>
+                                    <input type="text" id="first_name" class="keyword-input" name="first_name" required placeholder="Nom" value="{{app.user.firstName}}">
+                                </div>
+                                <div class="single-query">
+                                    <label for="last_name">Prénoms</label>
+                                    <input type="text" id="last_name" class="keyword-input" name="last_name" required placeholder="Prénoms" value="{{app.user.lastName}}">
+                                </div>
+                                 <div class="single-query">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="keyword-input" name="email" required placeholder="Entrer votre email" value="{{app.user.email}}">
+                                </div>
+                                <div class="single-query">
+                                    <label for="phone">Numéro de Téléphone</label>
+                                    <input type="text" id="phone" class="keyword-input" name="phone" required placeholder="Numéro de Téléphone" value="{{app.user.phone}}">
+                                </div>
+                              
+                                <div class="buttons text-center">
+                                    <button type="submit" class="button-black">Enregistrer</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Cart End -->
+{% endblock %}
+
+

@@ -1,0 +1,116 @@
+security:
+    encoders:
+        # Symfony\Component\Security\Core\User\User: plaintext    
+        Puzzle\UserBundle\Entity\User:
+            algorithm:        sha512
+            encode_as_base64: false
+            iterations:       1
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        chain_provider:
+            chain:
+                provider: [in_memory, user_db]
+        user_db:
+             id: user.provider
+        in_memory:
+            memory:
+                users:
+                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+
+    firewalls:
+        # wsse_secured:
+        #     pattern:   ^/news.*
+        #     stateless:  true
+        #     wsse:      { lifetime: 30 }
+        #     # anonymous : true
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+#        login:
+#            pattern:  ^/demo/secured/login$
+#            security: false
+            
+        login:
+            pattern: ^/login$
+            anonymous: ~
+
+        registration:
+            pattern: ^/registration$
+            anonymous: ~
+
+        connect:
+            pattern: ^/connect
+            anonymous: ~
+            
+        admin:
+            entry_point: security.authentication_entry_point
+            pattern: ^/
+            host: "%admin_host%"
+            provider: chain_provider
+            access_denied_handler: security.access_denied_handler
+            form_login:
+                check_path: login_check
+                login_path: /login
+                success_handler: security.authentication_success_handler
+                failure_handler: security.authentication_failure_handler
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /logout
+                target: /login
+                delete_cookies:
+                    REMEMBERME: { path: null, domain: null}
+            remember_me:
+                secret: "%secret%"
+                lifetime: 84400
+                # path: admin_homepage
+                domain: ~
+                always_remember_me: true
+
+        main:
+            entry_point: security.authentication_entry_point
+            pattern: ^/
+            host: "%host%"
+            anonymous: ~
+            provider: chain_provider
+            access_denied_handler: security.access_denied_handler
+            form_login:
+                check_path: login_check
+                login_path: /login
+                success_handler: security.authentication_success_handler
+                failure_handler: security.authentication_failure_handler
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /logout
+                target: app_homepage
+            remember_me:
+                secret: "%secret%"
+                lifetime: 84400
+                path: app_homepage
+                domain: ~
+                always_remember_me: true
+        
+        secured_area:
+            pattern:    ^/demo/secured/
+            form_login:
+                check_path: _security_check
+                login_path: _demo_login
+            logout:
+                path:   _demo_logout
+                target: _demo
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - {path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - {path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - {path: ^/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - {path: ^/, host: "%admin_host%", roles: ROLE_ADMIN }
+        # - {path: ^/, roles: ROLE_USER }

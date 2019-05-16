@@ -1,0 +1,68 @@
+{% trans_default_domain 'app' %}
+
+{% set translatable = translation_translatable(page) %}
+{% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(page.name) %}
+{% set content = translation(translatable, locale, 'content')|default(page.content) %}
+{% set slug = translation(translatable, locale, 'slug')|default(page.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ name|upper }} {% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-bottom: 10px;padding-top:10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="text-white">{{ name|upper }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ls page_portfolio section_padding_top_90 section_padding_bottom_10 columns_padding_25 columns_margin_bottom_30">
+        <div class="container">
+            <div class="row" style="margin-top: 47px;">
+                <div class="col-md-6 col-md-push-6" style="">
+                    <img class="rounded " src="{{ page.picture }}" alt="" style="">
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                    <h4 class="section_header thin">
+                        <b>{{ name }}</b>
+                    </h4>
+                    {% if content|length >540 %}
+                        <div>
+                            <p class="text-justify">
+                                {{ content |slice(0,540)|raw }}...
+                            </p>
+                        </div>
+                        <div class="container">
+                            <a href="lire-la-suite" data-toggle="modal" data-target="#id-popup">Lire la suite</a>
+                        </div>
+                        <div class="modal fade" id="id-popup" tabindex="-1" role="dialog" aria-labelledby="titrePopUp" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <!-- le titre de la popup --> 
+                                    <div class="modal-header"> 
+                                        <h4 class="modal-title" id="titrePopUp">
+                                            {{ name }}
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{ content|raw }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" aria-hidden="true">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>{{ content|raw }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>                             
+</section>
+{% endblock %}

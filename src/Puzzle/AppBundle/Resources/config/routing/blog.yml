@@ -1,0 +1,31 @@
+app_blog_posts:
+    path:     /blog/posts
+    defaults: { _controller: AppBundle:Blog:showPosts }
+
+app_blog_post:
+    path:     /{pageSlug}/{postSlug}
+    defaults: { _controller: AppBundle:Blog:showPost, _locale: fr  }
+
+app_blog_categories:
+    path:     /blog/categories
+    defaults: { _controller: AppBundle:Blog:showCategories }
+
+app_blog_category:
+    path:     /blog/categories/{id}
+    defaults: { _controller: AppBundle:Blog:showCategory }
+    
+app_blog_comments:
+    path:     /blog/posts/{id}/comments
+    defaults: { _controller: AppBundle:Blog:showComments }
+    
+app_blog_comment_add:
+    path:     /blog/posts/{id}/add-comment
+    defaults: { _controller: AppBundle:Blog:addComment }
+
+app_blog_comment_update:
+    path:     /blog/comments/{id}/update
+    defaults: { _controller: AppBundle:Blog:updateComment }
+
+app_blog_comment_remove:
+    path:     /blog/comments/{id}/remove
+    defaults: { _controller: AppBundle:Blog:deleteComment } 

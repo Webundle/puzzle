@@ -1,0 +1,37 @@
+.blocF{
+    background-color: #62CAF8;
+    padding: 20px;
+    margin: 10px;
+    font-size: 12px;
+    display: flex;
+    width: 350px;
+    height: fit-content;
+    justify-content: space-around;
+}
+.blocF:hover{
+    cursor: pointer;
+    -webkit-box-shadow: 21px 10px 20px -12px rgba(0,0,0,0.43);
+    -moz-box-shadow: 21px 10px 20px -12px rgba(0,0,0,0.43);
+    box-shadow: 21px 10px 20px -12px rgba(0,0,0,0.43);
+    transition: all 0.2s linear 0s;
+}
+.img_blocF{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+.img_blocF:hover{
+    border: solid #000099 5px;    
+    transition: all 0.2s linear 0s;
+}
+.text_blocF{
+    padding: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .blocF{
+        width: 95%;
+    }
+}

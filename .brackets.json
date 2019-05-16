@@ -1,0 +1,11 @@
+{
+    "jwolfe.file-tree-exclude.list": [
+        ".settings",
+        ".git",
+        ".project",
+        "app/cache/*",
+        "app/logs/*",
+        "vendor",
+        "web"
+    ]
+}

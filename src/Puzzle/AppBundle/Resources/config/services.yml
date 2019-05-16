@@ -1,0 +1,13 @@
+services:
+    # Twig extension
+    app.twig.extension:
+        class: Puzzle\AppBundle\Twig\AppExtension
+        arguments: [ '@doctrine.orm.entity_manager', '@twig', '@translation.translator' ]
+        tags:
+            - { name: twig.extension }
+                
+    app.blog.twig.extension:
+        class: Puzzle\AppBundle\Twig\BlogExtension
+        arguments: [ '@doctrine.orm.entity_manager', "@knp_paginator" ]
+        tags:
+            - { name: twig.extension }

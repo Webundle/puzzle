@@ -1,0 +1,155 @@
+{% trans_default_domain 'app' %}
+
+{% set translatable = translation_translatable(page) %}
+{% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(page.name) %}
+{% set content = translation(translatable, locale, 'content')|default(page.content) %}
+{% set slug = translation(translatable, locale, 'slug')|default(page.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick-theme.css')}}"/>
+{% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-top:10px;padding-bottom: 10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="text-white">{{ name|upper }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ls">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5489.565169166209!2d-3.99037700550557!3d5.349635227467144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xe71b18ec68d69ab1!2sEcole+Nationale+Sup%C3%A9rieure+de+Statistique+et+d&#39;Economie+Appliqu%C3%A9e!5e0!3m2!1sfr!2sci!4v1518779139966" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</section>
+<section class="ls columns_padding_25 section_padding_top_100 section_padding_bottom_100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="module-header">{{ "contact.title"|trans({}, 'app')}}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 to_animate" data-animation="scaleAppear">
+                            <form class="contact-form columns_padding_5" method="post" action="http://webdesign-finder.com/html/social-activism/">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">{{ "contact.form.name"|trans({}, 'app') }}
+                                            <span class="required">*</span>
+                                        </label>
+                                        <i class="fa fa-user highlight" aria-hidden="true"></i>
+                                        <input type="text" aria-required="true" size="30" value="" name="name" id="name" class="form-control" placeholder="{{ "contact.form.name"|trans({}, 'app') }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="phone">{{ "contact.form.phone"|trans({}, 'app') }}
+                                            <span class="required">*</span>
+                                        </label>
+
+                                        <i class="fa fa-phone highlight" aria-hidden="true"></i>
+                                        <input type="text" aria-required="true" size="30" value="" name="phone" id="phone" class="form-control" placeholder="{{ "contact.form.phone"|trans({}, 'app') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="email">{{ "contact.form.email"|trans({}, 'app') }} 
+                                            <span class="required">*</span>
+                                        </label>
+                                        <i class="fa fa-envelope highlight" aria-hidden="true"></i>
+                                        <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control" placeholder="{{ "contact.form.email"|trans({}, 'app') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="subject">{{ "contact.form.subject"|trans({}, 'app') }}
+                                            <span class="required">*</span>
+                                        </label>
+                                        <i class="fa fa-flag highlight" aria-hidden="true"></i>
+                                        <input type="text" aria-required="true" size="30" value="" name="subject" id="subject" class="form-control" placeholder="{{ "contact.form.subject"|trans({}, 'app') }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="contact-form-message form-group">
+                                        <label for="message">{{ "contact.form.message"|trans({}, 'app') }}</label>
+                                        <i class="fa fa-comment highlight" aria-hidden="true"></i>
+                                        <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control" placeholder="{{ "contact.form.message"|trans({}, 'app') }}"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 bottommargin_0">
+                                    <div class="contact-form-submit topmargin_10">
+                                        <button type="submit" id="contact_form_submit" name="contact_submit" class="theme_button color1 wide_button margin_0">{{ "contact.form.send"|trans({}, 'app') }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4 to_animate" data-animation="scaleAppear">
+                            <ul class="list1 no-bullets no-top-border no-bottom-border">
+                                <li>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <i class="rt-icon2-shop highlight fontsize_18"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading grey">{{ "contact.postBox"|trans({}, 'app') }}:</h5>
+                                            08 BP 03 Abidjan 08
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <i class="rt-icon2-phone5 highlight fontsize_18"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading grey">{{ "contact.phone"|trans({}, 'app') }}:</h5>
+                                            (225) 22 48 32 32 / (225) 22 48 32 00
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <i class="rt-icon2-stack4 highlight fontsize_18"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading grey">{{ "contact.fax"|trans({}, 'app') }}:</h5>
+                                            (225) 22 44 39 88
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <i class="rt-icon2-mail highlight fontsize_18"></i>
+                                        </div>
+                                        <div class="media-body greylinks">
+                                            <h5 class="media-heading grey">{{ "contact.email"|trans({}, 'app') }}:</h5>
+                                            <a href="mailto:your@mail.com">ensea@ensea.ed.ci</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{  parent() }}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTwYSMRGuTsmfl2z_zZDStYqMlKtrybxo"></script>
+{% endblock %}

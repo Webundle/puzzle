@@ -1,0 +1,3 @@
+app_static_page:
+    path:     /{slug}
+    defaults: { _controller: AppBundle:Static:showPage, _locale: fr  }

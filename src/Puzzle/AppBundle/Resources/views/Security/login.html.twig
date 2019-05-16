@@ -1,0 +1,59 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}
+{{ parent() }}
+- Identification
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block section %}
+
+<section class="height-100vh login login-gradient">
+	<div class="container">
+		<div class="row row-eq-height no-gutter vertical-align">
+			
+			<div class="col-md-5 col-md-offset-3 white-bg">
+				<div class="login-fancy clearfix">
+    				<div class="text-center">
+        				<img src="{{ asset('logo.jpg') }}" alt="Logo" width="30%">
+        			</div>
+    				<h3 class="mb-30 text-center">Connectez-vous</h3>
+    				<form action="{{ url('login_check') }}" method="POST">
+    					<div class="section-field mb-20">
+    						{#<label class="mb-10" for="login_username">Nom d'utilisateur </label>#}
+    						<input type="text" id="login_username" class="web form-control" required
+    						name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur ou e-mail" />
+    					</div>
+    					<div class="section-field mb-20">
+    						{#<label class="mb-10" for="login_password">Mot de passe </label>#}
+    						<input type="password" id="login_password" name="_password" required class="Password form-control" placeholder="Mot de passe"/>
+    						 
+    					</div>
+    					<div class="section-field">
+    						<div class="remember-checkbox mb-30">
+    							<input type="checkbox" class="form-control" name="_remember_me" id="two" />
+    							<label for="two"> Se souvenir de moi</label> <a
+    								href="#" class="pull-right">Mot de passe oublié ?</a>
+    						</div>
+    					</div>
+    					<input type="hidden" name="_target_path" value="app_homepage" />
+	                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+    					<button class="button" type="submit"><span>Connexion</span> <i class="fa fa-check"></i> </button>
+    				</form>
+					<p class="mt-20 mb-20">
+						Vous ne vous êtes pas encore enregistrer ? <a href="#"> Faites le maintenant</a>
+					</p>
+					<div class="text-center">
+    					<h6><a href="{{ url('app_homepage') }}"><i class="fa fa-home"></i> Retour à l'accueil</a></h6>
+    				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}ENSEA{% endblock %}</title>
+        <meta name="description" content="L'Ecole Nationale de Statistiques et d'Economie Appliquée (ENSEA) est un Etablissement Public National qui a pour vocation d'assurer la formation des statisticiens pour les pays africains">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:url"                content="http://ensea.ci" />
+        <meta property="og:type"               content="formation" />
+        <meta property="og:title"              content="ENSEA" />
+        <meta property="og:description"        content="L'Ecole Nationale de Statistiques et d'Economie Appliquée (ENSEA)" />
+        <meta property="og:image"              content="http://ensea.ci/bundles/app/images/home.jpg" />
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="full-width">
+        {% block body %}
+            {% block loader %}{% endblock %}
+            <div id="canvas">
+                <div id="box_wrapper">
+                    {% block header %}{% endblock %}
+                    {% block asideleft %}{% endblock %}
+                    {% block asideright %}{% endblock %}
+                    {% block section %}{% endblock %}
+                    {% block footer %}{% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+

@@ -1,0 +1,50 @@
+app_user_profile:
+    path:     /myaccount/profile
+    defaults: { _controller: AppBundle:User:showProfile, _locale: fr  }
+
+app_user_credentials:
+    path:     /myaccount/credentials
+    defaults: { _controller: AppBundle:User:showCredentials }
+
+app_user_profile_update_form:
+    path:     /myaccount/update-profile-form
+    defaults: { _controller: AppBundle:User:updateProfileForm }
+
+app_user_profile_update_callback:
+    path:     /myaccount/update-profile-callback
+    defaults: { _controller: AppBundle:User:updateProfileCallback }
+    methods: POST
+
+app_user_credentials_update_form:
+    path:     /myaccount/update-credentials-form
+    defaults: { _controller: AppBundle:User:updateCredentialsForm }
+
+app_user_credentials_update_callback:
+    path:     /myaccount/update-credentials-callback
+    defaults: { _controller: AppBundle:User:updateCredentialsCallback }
+    methods: POST
+app_user_addresses:
+    path:     /myaccount/addresses
+    defaults: { _controller: AppBundle:User:showAddresses }
+app_user_address_create_form:
+    path:     /myaccount/create-address-form
+    defaults: { _controller: AppBundle:User:createAddressForm }
+app_user_address_create_callback:
+    path:     /addresses/create-address-callback
+    defaults: { _controller: AppBundle:User:createAddressCallback }
+    methods: POST
+app_user_address:
+    path:     /myaccount/addresses/{id}
+    defaults: { _controller: AppBundle:User:showAddress }
+app_user_address_update_form:
+    path:     /myaccount/addresses/{id}/update-form
+    defaults: { _controller: AppBundle:User:updateAddressForm }
+
+app_user_address_update_callback:
+    path:     /myaccount/addresses/{id}/update-callback
+    defaults: { _controller: AppBundle:User:updateAddressCallback }
+    methods: POST
+
+app_user_address_remove:
+    path:     /myaccount/addresses/{id}/remove
+    defaults: { _controller: AppBundle:User:removeAddress }

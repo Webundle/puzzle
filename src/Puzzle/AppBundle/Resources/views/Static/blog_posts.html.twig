@@ -1,0 +1,100 @@
+{% trans_default_domain 'app' %}
+
+{% set translatable = translation_translatable(page) %}
+{% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(page.name) %}
+{% set content = translation(translatable, locale, 'content')|default(page.content) %}
+{% set slug = translation(translatable, locale, 'slug')|default(page.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ "news"|trans }}{% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-top:10px; padding-bottom:10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="text-white">{{ "news"|trans|upper }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ls page_portfolio section_padding_top_150 section_padding_bottom_130">
+        <div class="container">
+            <div class="row" style="margin-top:-117px;">
+                <div class="col-sm-12">
+                    <div class="isotope_container isotope row masonry-layout columns_margin_bottom_20">
+                        {% set page = app.request.get('page')|default("1") %}
+                        {% set limit = 10 %}
+                        {% set posts = blog_posts(limit, 'DESC', page) %}
+                        {% for post in posts %}
+                            {% set translatable = translation_translatable(post) %}
+                            {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                            {% set name = translation(translatable, locale, 'name')|default(post.name) %}
+                            {% set description = translation(translatable, locale, 'description')|default(post.description) %}
+                            {% set postSlug = translation(translatable, locale, 'slug')|default(post.slug) %}
+                            
+                            <div class="isotope-item col-lg-4 col-md-6 col-sm-12">
+                                <article class="vertical-item content-padding text-center with_border rounded">
+                                    <div class="item-media top_rounded overflow_hidden">
+                                        <img  src="{{ post.picture|imagine_filter('thumb', {"thumbnail": {"size": [400, 250] }}) }}" alt="">
+                                        <div class="media-links">
+                                            <a href="{{ path('app_blog_post',{'_locale': app.request.get('_locale')|default('fr'), 'pageSlug':slug, 'postSlug':postSlug}) }}" class="abs-link"></a>
+                                        </div>
+                                    </div>
+                                    <div class="item-content">
+                                        <header class="entry-header">
+                                            <h4 class="entry-title">
+                                                <a href="{{ path('app_blog_post',{'_locale': app.request.get('_locale')|default('fr'), 'pageSlug':slug, 'postSlug':postSlug}) }}" title="{{ name }}">
+                                                    {% if name|length < 50 %}
+                                                        {{ name }}
+                                                    {% else %}
+                                                        {{ name|slice(0,50)|raw }}...
+                                                    {% endif %}
+                                                </a>
+                                            </h4>
+                                        </header>
+                                        {#<div class="entry-content">
+                                            <a style="color:black" href="{{ path('app_static_page',{'slug': slug}) }}">
+                                                <p>
+                                                    {% if description|length<100 %}
+                                                        {{ description|slice(0,100)|raw }}
+                                                    {% else %}
+                                                        {{ description|slice(0,100)|raw }}...
+                                                    {% endif %}
+                                                </p>
+                                            </a>
+                                        </div>#}
+                                    </div>
+                                    <footer class="entry-meta with_top_border darklinks">
+                                        <p class="inline-content small-text">
+                                            <span>
+                                                <i class="fa fa-calendar rightpadding_5 highlight" aria-hidden="true"></i>
+                                                <a href="#">
+                                                    <time class="entry-date">
+                                                        {{ post.createdAt|date('d/m/Y') }}
+                                                    </time>
+                                                </a>
+                                            </span>								
+                                        </p>
+                                    </footer>
+                                </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- eof .isotope_container.row -->
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <ul class="pagination">
+                                <li>
+                                    {{ knp_pagination_render(posts) }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

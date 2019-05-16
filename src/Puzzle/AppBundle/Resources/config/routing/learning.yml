@@ -1,0 +1,19 @@
+app_learning_posts:
+    path:     /learning/posts
+    defaults: { _controller: AppBundle:Learning:showPosts }
+
+app_learning_post:
+    path:     /learning/posts/{id}
+    defaults: { _controller: AppBundle:Learning:showPost }
+
+app_learning_categories:
+    path:     /learning/categories
+    defaults: { _controller: AppBundle:Learning:showCategories }
+
+app_learning_category:
+    path:     /learning/categories/{id}
+    defaults: { _controller: AppBundle:Learning:showCategory }
+
+app_learning_page:
+    path:     /p?id={id}
+    defaults: { _controller: AppBundle:Learning:showPage }

@@ -1,0 +1,59 @@
+app_inventory_homepage:
+    path:     /store
+    defaults: { _controller: AppBundle:Inventory:index }
+
+app_inventory_products:
+    path:     /store/products
+    defaults: { _controller: AppBundle:Inventory:showProducts }
+
+app_inventory_product:
+    path:     /store/products/{id}
+    defaults: { _controller: AppBundle:Inventory:showProduct }
+
+app_inventory_categories:
+    path:     /store/categories
+    defaults: { _controller: AppBundle:Inventory:showCategories }
+
+app_inventory_category:
+    path:     /store/category/{id}
+    defaults: { _controller: AppBundle:Inventory:showCategory }
+
+app_inventory_search:
+    path:     /store/search
+    defaults: { _controller: AppBundle:Inventory:search }
+    methods: POST
+
+app_inventory_search_results:
+    path:     /store/search/results
+    defaults: { _controller: AppBundle:Inventory:showSearchProducts }
+
+app_inventory_new_products:
+    path:     /store/new-products
+    defaults: { _controller: AppBundle:Inventory:showNewProducts }
+
+app_inventory_best_sellers:
+    path:     /store/best-sellers
+    defaults: { _controller: AppBundle:Inventory:showBestSellers }
+
+app_inventory_special_products:
+    path:     /store/special-products
+    defaults: { _controller: AppBundle:Inventory:showSpecialProducts }
+
+app_inventory_most_viewed:
+    path:     /store/products-most-viewed
+    defaults: { _controller: AppBundle:Inventory:showMostViewed }
+
+
+app_inventory_favorites:
+    path:     /store/favorites
+    defaults: { _controller: AppBundle:Inventory:showFavorites }
+
+app_inventory_favorite_add:
+    path:     /store/add-favorite
+    defaults: { _controller: AppBundle:Inventory:addFavorite }
+    methods: POST
+
+app_inventory_favorite_remove:
+    path:     /store/favorite/{id}/remove
+    defaults: { _controller: AppBundle:Inventory:removeFavorite }
+

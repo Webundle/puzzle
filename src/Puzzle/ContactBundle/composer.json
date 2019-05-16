@@ -1,0 +1,39 @@
+{
+    "name" : "puzzle/newsletter-bundle",
+    "description" : "Manage newsletter",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Qwincy Percy",
+        "email" : "qwincypercy@fermentuse.com"
+    }],
+    "keywords" : [
+        "newsletter bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": ">=5.3.9",
+        "symfony/symfony": "2.8.*",
+        "doctrine/orm": "^2.4.8",
+        "doctrine/doctrine-bundle": "~1.4",
+        "twig/twig" : "*",
+        "puzzle/user-bundle": "dev-master",
+        "puzzle/admin-bundle": "dev-master",
+        "puzzle/media-bundle": "dev-master",
+        "puzzle/scheduling-bundle": "dev-master"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Puzzle\\NewsletterBundle" : ""
+        }
+    },
+    "target-dir" : "Puzzle/NewsletterBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "some_version-dev"
+        }
+    }
+}

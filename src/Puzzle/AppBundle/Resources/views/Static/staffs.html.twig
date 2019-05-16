@@ -1,0 +1,91 @@
+{% trans_default_domain 'app' %}
+
+{% set translatable = translation_translatable(page) %}
+{% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(page.name) %}
+{% set content = translation(translatable, locale, 'content')|default(page.content) %}
+{% set slug = translation(translatable, locale, 'slug')|default(page.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick-theme.css')}}"/>
+{% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-top:10px;padding-bottom: 10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="text-white">{{ name|upper }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ls page_portfolio section_padding_top_150 section_padding_bottom_10 columns_padding_25 columns_margin_bottom_30">
+        <div class="container">
+            <div class="row" style="margin-top: -139px;">
+                {% set services = expertise_services() %}
+                {% for i in range(3, services|length - 1, 4) %}
+                    {% set offset = i - 3 %}
+                    <div class="col-sm-12 justify" style="">
+                        <div class='tabcontrol' data-role='tabcontrol'>
+                            <div class="col-md-12">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    {% for j in offset..i %}
+                                        {% if services[j] is not empty %}
+                                            <li {% if j == 0 %}class="active"{% endif %}>
+                                                <a href="#tab{{ services[j].id }}" role="tab" data-toggle="tab">
+                                                    {% set translatable = translation_translatable(services[j]) %}
+                                                    {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                                                    {{ translation(translatable, locale, 'name')|default(services[j].name) }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <div class="tab-content" style="background-color: #eeeeee;">
+                                    {% for j in offset..i %}
+                                        {% if services[j] is not empty %}
+                                            {% set staffs = expertise_staffs_by_service(services[j].id) %}
+                                            <div class="tab-pane fade {% if j == 0 %}in active{% endif %}" id="tab{{ services[j].id }}">
+                                                <div class="row">
+                                                    {% for staff in staffs %}
+                                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                                            <div class="image-flip">
+                                                                <div class="mainflip">
+                                                                    <div class="frontside">
+                                                                        <div class="card">
+                                                                            <div class="card-body text-center">
+                                                                                <p><img class=" img-fluid" src="{{ staff.picture }}" alt="card image"></p>
+                                                                                <h4 class="card-title">{{ staff.firstName|upper }} {{ staff.lastName|title }}</h4>
+                                                                                <p class="card-text">
+                                                                                    {% set translatable = translation_translatable(staff) %}
+                                                                                    {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                                                                                    {{ translation(translatable, locale, 'position')|default(staff.position) }}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> 
+        </div>
+    </section>
+{% endblock %}
+

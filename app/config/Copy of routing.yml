@@ -1,0 +1,123 @@
+translation:
+    resource: "@TranslationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+blog_admin:
+    resource: "@BlogBundle/Resources/config/routing.yml"
+    prefix:   /blog
+    host: "%admin_host%"
+
+static_admin:
+    resource: "@StaticBundle/Resources/config/routing.yml"
+    prefix:   /static
+    host: "%admin_host%"
+
+calendar_admin:
+    resource: "@CalendarBundle/Resources/config/routing.yml"
+    prefix:   /calendar
+    host: "%admin_host%"
+
+media_admin:
+    resource: "@MediaBundle/Resources/config/routing.yml"
+    prefix:   /media
+    host: "%admin_host%"
+
+contact:
+    resource: "@ContactBundle/Resources/config/routing.yml"
+    prefix:   /contact
+
+booking:
+    resource: "@BookingBundle/Resources/config/routing.yml"
+    prefix:   /booking
+
+insurance:
+    resource: "@InsuranceBundle/Resources/config/routing.yml"
+    prefix:   /insurance
+    host: "%admin_host%"
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /
+    host: "%admin_host%"
+
+wallet:
+    resource: "@WalletBundle/Resources/config/routing.yml"
+    prefix:   /wallet
+    host: "%admin_host%"
+
+scheduling_admin:
+    resource: "@SchedulingBundle/Resources/config/routing.yml"
+    prefix:   /scheduling
+    host: "%admin_host%"
+
+booklet_admin:
+    resource: "@BookletBundle/Resources/config/routing/admin.yml"
+    prefix:   /booklet
+    host: "%admin_host%"
+
+learning_admin:
+    resource: "@LearningBundle/Resources/config/routing/admin.yml"
+    prefix:   /learning
+    host: "%admin_host%"
+
+charity_admin:
+    resource: "@CharityBundle/Resources/config/routing/admin.yml"
+    prefix:   /charity
+    host: "%admin_host%"
+
+collaborative_admin:
+    resource: "@CollaborativeBundle/Resources/config/routing/admin.yml"
+    prefix:   /collaborative
+    host: "%admin_host%"
+
+newsletter_admin:
+    resource: "@NewsletterBundle/Resources/config/routing.yml"
+    prefix:   /newsletter
+    host: "%admin_host%"
+
+contact_admin:
+    resource: "@ContactBundle/Resources/config/routing.yml"
+    prefix:   /contact
+    host: "%admin_host%"
+    
+sale_admin:
+    resource: "@SaleBundle/Resources/config/routing/admin.yml"
+    prefix:   /sale
+    host: "%admin_host%"
+
+inventory_admin:
+    resource: "@InventoryBundle/Resources/config/routing/admin.yml"
+    prefix:   /inventory
+    host: "%admin_host%"
+
+user_security:
+    resource: "@UserBundle/Resources/config/routing/security.yml"
+    prefix:   /
+
+user_admin:
+    resource: "@UserBundle/Resources/config/routing/admin.yml"
+    prefix:   /
+    host: "%admin_host%"
+
+expertise_admin:
+    resource: "@ExpertiseBundle/Resources/config/routing.yml"
+    prefix:   /expertise
+    host: "%admin_host%"
+    
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}
+    host: "%host%"
+    requirements:
+        _locale: en|fr
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+JMSJobQueueBundle:
+    resource: "@JMSJobQueueBundle/Controller/"
+    type: annotation
+    prefix: /jobs

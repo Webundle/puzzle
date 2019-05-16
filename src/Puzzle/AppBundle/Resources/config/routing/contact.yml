@@ -1,0 +1,3 @@
+app_contact_create_contact:
+    path:     /contact/create-contact
+    defaults: { _controller: AppBundle:Contact:createContact, _locale: fr  }

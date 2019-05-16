@@ -1,0 +1,366 @@
+{% trans_default_domain 'app' %}
+
+{% set active = "home" %}
+
+{% set translatable = translation_translatable(post) %}
+{% set locale = translation_locale(app.request.get('lang')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(post.name) %}
+{% set description = translation(translatable, locale, 'content')|default(post.description) %}
+{% set slug = translation(translatable, locale, 'slug')|default(post.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %} Actualités : {{ name }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/jssocials/dist/jssocials.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/jquery-comments/css/jquery-comments.css') }}" media="all" />
+{% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-top:10px; padding-bottom:10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <ol class="breadcrumb darklinks">
+                        <h3 class="text-white">{{ "news"|trans|upper }}</h3>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ls section_padding_top_150 section_padding_bottom_150 columns_padding_25">
+        <div class="container">
+            <div class="row" style="margin-top: -127px;">
+                <div class="col-sm-9 col-md-9 col-xs-12">
+                    <article class="single-post vertical-item content-padding big-padding post with_border rounded">
+                        <div class="entry-thumbnail item-media top_rounded overflow_hidden">
+                            <img src="{{ post.picture }}">
+                        </div>
+                        <div class="item-content">
+                            <header class="entry-header">
+                                <h1 class="entry-title topmargin_0">
+                                    {{ name }}
+                                </h1>
+                                {#<div class="muted_background post-adds content-justify rounded">
+                                    <div>
+                                    <div class="dropdown inline-block">
+                                    <a href="#" data-target="#" class="theme_button color1 share_button" id="post_share_buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-share" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="post_share_buttons">
+                                    <div class="share_buttons">
+                                    <a href="#0" class="social-icon color-bg-icon soc-facebook" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-twitter" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-google" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-pinterest" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-linkedin" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-tumblr" target="_blank"></a>
+                                    <a href="#0" class="social-icon color-bg-icon soc-reddit" target="_blank"></a>
+                                    </div>
+                                    <!-- eof .share_buttons -->
+                                    </div>
+                                    <!-- eof .dropdown-menu -->
+                                    </div>
+                                    <!-- eof .dropdown -->
+                                    <a href="#" class="theme_button color1 no_bg_button like_button">
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    </a>
+                                    <span class="item-likes">
+                                    355 likes
+                                    </span>
+                                    </div>
+                                    <div>
+                                    <span class="views-count main_bg_color">
+                                    23573 views
+                                    </span>
+                                    </div>
+                                    </div>#}
+                            </header>
+                            <!-- .entry-header -->
+                            <div class="entry-content">
+                                <p style="text-align: justify">
+                                    {{ description|raw }}
+                                </p>
+                                <div class="inline-content entry-meta semibold small-text darklinks topmargin_30">
+                                    <div>
+                                        <i class="fa fa-calendar highlight rightpadding_5" aria-hidden="true"></i>
+                                        <a href="#">
+                                            <time class="entry-date" datetime="{{ post.createdAt|date('d/m/Y') }}">
+                                                {{ post.createdAt|date('d/m/Y') }}
+                                            </time>
+                                        </a>
+                                    </div>
+                                    <div id="share" style="line-height:0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </article>
+                </div>
+                <aside class="col-sm-3 col-md-3 col-xs-12">
+                    {% if posts is not empty %}
+                        <div class="widget widget_recent_posts">
+                            <h3 class="widget-title">ACTUALITES</h3>
+                            <ul class="media-list">
+                                {% for new in posts %}
+                                    {% set translatable = translation_translatable(new) %}
+                                    {% set locale = translation_locale(app.request.get('lang')|default('fr')) %}
+                                    {% set name = translation(translatable, locale, 'name')|default(new.name) %}
+                                    {% set slug = translation(translatable, locale, 'slug')|default(new.slug) %}
+
+                                    <li class="media">
+                                        <div class="media-left media-middle">
+                                            <img src="{{ new.picture }}" alt="" />
+                                        </div>
+                                        <div class="media-body media-middle">
+                                            <h4>
+                                                <a href="{{ path('app_blog_post',{'_locale': app.request.get('_locale')|default('fr'), 'pageSlug':"actualités", 'postSlug':slug}) }}">
+                                                    {{ name }}
+                                                </a>
+                                            </h4>
+                                            <span>
+                                                <time class="entry-date small-text highlight" datetime="{{ new.createdAt|date('d/m/Y') }}">
+                                                    {{ new.createdAt|date('d/m/Y') }}
+                                                </time>
+                                            </span>
+                                        </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="widget widget_recent_posts">
+                        <h3 class="widget-title">CATEGORIES</h3>
+                        <ul class="media-list">
+                            {% for category in categories %}
+                                {% set translatable = translation_translatable(category) %}
+                                {% set locale = translation_locale(app.request.get('lang')|default('fr')) %}
+                                {% set name = translation(translatable, locale, 'name')|default(category.name) %}
+                                {% set slug = translation(translatable, locale, 'slug')|default(category.slug) %}
+                                <li>
+                                    <i class="fa fa-chevron-circle-right"></i>
+                                    <a href="{{ url('app_static_page', {'_locale': app.request.get('_locale')|default('fr'), 'slug': slug|default("#")}) }}">{{ name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div class="widget widget_recent_posts">
+                        <h3 class="widget-title">ARCHIVES</h3>
+                        <ul class="media-list">
+                            {% for archive in archives %}
+                                <li>
+                                    <i class="fa fa-chevron-right"></i>
+                                    <a href="{{ url('app_static_page', {'_locale': app.request.get('_locale')|default('fr'), 'slug': slug|default("#")}) }}">{{ archive.month }} {{ archive.year }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    {#
+                    <div class="widget widget_apsc_widget">
+                        <h3 class="widget-title"></h3>
+                        <div class="apsc-icons-wrapper clearfix apsc-theme-4">
+                            <div id="share"></div>
+                            <div class="apsc-each-profile">
+                                <a class="apsc-facebook-icon clearfix" href="#">
+                                    <div class="apsc-inner-block">
+                                        <span class="social-icon">
+                                            <i class="fa fa-facebook apsc-facebook"></i>
+                                            <span class="media-name">Facebook</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="apsc-each-profile">
+                                <a class="apsc-twitter-icon clearfix" href="#">
+                                    <div class="apsc-inner-block">
+                                        <span class="social-icon">
+                                            <i class="fa fa-twitter apsc-twitter"></i>
+                                            <span class="media-name">Twitter</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="apsc-each-profile">
+                                <a class="apsc-google-plus-icon clearfix" href="#">
+                                    <div class="apsc-inner-block">
+                                        <span class="social-icon">
+                                            <i class="apsc-googlePlus fa fa-google-plus"></i>
+                                            <span class="media-name">google+</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    #}
+                </aside>
+                <!-- eof aside sidebar -->
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{  parent() }}
+    <script src="{{ asset('bundles/app/dist/jssocials/dist/jssocials.js') }}"></script>
+    <script src="{{ asset('bundles/app/dist/jquery-comments/js/jquery-comments.js') }}"></script>
+    <script>
+
+        // Shares
+        $("#share").jsSocials({
+            showLabel: false,
+            showCount: false,
+            shareIn: "popup",
+            shares: [{
+                renderer: function() {
+                    var $result = $('<div>');
+
+                    var script = document.createElement("script");
+                    script.text = "(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.3\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));";
+                    $result.append(script);
+
+                    $("<div>").addClass("fb-share-button")
+                        .attr("data-layout", "button")
+                        .appendTo($result);
+
+                    return $result;
+                }
+            }, {
+                renderer: function() {
+                    var $result = $("<div>");
+
+                    var script = document.createElement("script");
+                    script.src = "https://apis.google.com/js/platform.js";
+                    $result.append(script);
+
+                    $("<div>").addClass("g-plus")
+                        .attr({
+                        "data-action": "share",
+                        "data-annotation": "bubble"
+                    })
+                        .appendTo($result);
+
+                    return $result;
+                }
+            }, {
+                renderer: function() {
+                    var $result = $("<div>");
+
+                    var script = document.createElement("script");
+                    script.src = "//platform.linkedin.com/in.js";
+                    $result.append(script);
+
+                    $("<script>").attr({ type: "IN/Share", "data-counter": "right" })
+                        .appendTo($result);
+
+                    return $result;
+                }
+            }, {
+                renderer: function() {
+                    var $result = $("<div>");
+
+                    var script = document.createElement("script");
+                    script.text = "window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src=\"https://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,\"script\",\"twitter-wjs\"));";
+                    $result.append(script);
+
+                    $("<a>").addClass("twitter-share-button")
+                        .text("Partager")
+                        .attr("href", "https://twitter.com/share")
+                        .appendTo($result);
+
+                    return $result;
+                }
+            }]
+        });
+
+
+        // Comments
+        {% if app.user is not empty %}
+            $('#comments-container').comments({
+            profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
+            newestText: 'Récents',
+            oldestText: 'Anciens',
+            popularText: 'Populaires',
+            sendText: 'Commenter',
+            replyText: 'Repondre',
+            editText: 'Modifier',
+            editedText: 'Modifié',
+            youText: 'Moi',
+            viewAllRepliesText: 'Afficher plus de réponses',
+            hideRepliesText: 'Masquer des réponses',
+            getComments: function(success, error) {
+            $.ajax({
+            type: 'post',
+            url: '{{ url('app_blog_comments', {'id':post.id}) }}',
+            success: function(comment) {
+            success(comment)
+            },
+            error: error
+            });
+            },
+            postComment: function(commentJSON, success, error) {
+            $.ajax({
+            type: 'post',
+            url: '{{ url('app_blog_comment_add', {'id':post.id}) }}',
+            data: commentJSON,
+            success: function(comment) {
+            success(comment)
+            },
+            error: error
+            });
+            },
+            putComment: function(commentJSON, success, error) {
+            $.ajax({
+            type: 'put',
+            url: '/api/comments/' + commentJSON.id,
+            data: commentJSON,
+            success: function(comment) {
+            success(comment)
+            },
+            error: error
+            });
+            },
+            deleteComment: function(commentJSON, success, error) {
+            $.ajax({
+            type: 'delete',
+            url: '/api/comments/' + commentJSON.id,
+            success: success,
+            error: error
+            });
+            },
+            upvoteComment: function(commentJSON, success, error) {
+            var commentURL = '/api/comments/' + commentJSON.id;
+            var upvotesURL = commentURL + '/upvotes/';
+
+            if(commentJSON.userHasUpvoted) {
+            $.ajax({
+            type: 'post',
+            url: upvotesURL,
+            data: {
+            comment: commentJSON.id
+            },
+            success: function() {
+            success(commentJSON)
+            },
+            error: error
+            });
+            } else {
+            $.ajax({
+            type: 'delete',
+            url: upvotesURL + upvoteId,
+            success: function() {
+            success(commentJSON)
+            },
+            error: error
+            });
+            }
+            }
+            });
+        {% endif %}
+
+</script>
+{% endblock %}

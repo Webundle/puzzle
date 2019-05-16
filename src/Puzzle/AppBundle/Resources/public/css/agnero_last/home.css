@@ -1,0 +1,101 @@
+
+.bt_decouv{
+    background-color: white;
+    color : #030384 !important;
+    padding: 20px;
+    border-radius: 2px;
+}
+.bt_decouv:hover{
+	background-color: #030384;
+	color:#FFFFFF !important;
+	transition: all 0.2s linear 0s;
+}
+.colorBlued{ 
+    color : #030384 !important;
+}
+.media-left.media-middle{
+    border-radius: 5px;
+}
+.cadreBtnSlide{ 
+    float: right;
+    width: 300px; 
+    bottom: 0; 
+    padding: 20px; 
+    margin-right: -100px; 
+    margin-top: 200px;
+}
+.btnSlide{
+    margin: 10px;
+    padding: 20px;
+    background-color: #83D5FB;
+    border-radius: 3px;
+    color: white;
+    overflow: hidden;  
+    display: flex;
+    justify-content: space-around;
+}
+.btnSlideIco{
+    width: 30px;
+    height: 30px;    
+}
+.btnSlide:hover{
+    background-color: #36369A;
+    cursor: pointer;
+    transition: all 0.2s linear 0s;
+}
+.txt_decouv{
+    margin-bottom: 30px;
+}
+.txt_part{
+    color: #36369A;
+}
+.img_act{
+    border-radius: 3px;
+}
+.contain_bt_mob{
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.flash_inf{
+    height: 30px;
+    width: 150px;
+    position: absolute;
+    z-index: 30;
+}
+.flash_inf *{
+    color: #FFF;
+}
+.marquee_container{
+    height: 50px;
+    width: 100%;
+    background-color: #000000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 71;
+    color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .cadreBtnSlide{
+        height: fit-content;
+    }
+    .slides{
+        height: 600px;
+        overflow: hidden;
+    }
+    .contain_bt_mob{
+        margin-top:30px;
+        height: fit-content;
+    }
+    .img_gal{
+        width: 80%;
+        margin: 10px;
+    }
+    .title_gal{
+        font-size: 30px;
+    }
+}

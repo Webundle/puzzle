@@ -1,0 +1,22 @@
+app_default:
+    resource: '@AppBundle/Resources/config/routing/default.yml'
+app_blog:
+    resource: '@AppBundle/Resources/config/routing/blog.yml'
+app_calendar:
+    resource: '@AppBundle/Resources/config/routing/calendar.yml'
+app_static:
+    resource: '@AppBundle/Resources/config/routing/static.yml'
+app_expertise:
+    resource: '@AppBundle/Resources/config/routing/expertise.yml'
+app_inventory:
+    resource: '@AppBundle/Resources/config/routing/inventory.yml'
+app_learning:
+    resource: '@AppBundle/Resources/config/routing/learning.yml'
+app_newsletter:
+    resource: '@AppBundle/Resources/config/routing/newsletter.yml'
+app_contact:
+    resource: '@AppBundle/Resources/config/routing/contact.yml'
+app_sale:
+    resource: '@AppBundle/Resources/config/routing/sale.yml'
+app_user:
+    resource: '@AppBundle/Resources/config/routing/user.yml'

@@ -1,0 +1,24 @@
+.cadreBtnSlide{ float: right;width: 300px; bottom: 0; padding: 20px; margin-right: -100px; margin-top: 200px;}
+
+.btnSlide{width: 250px; height: 50px;  background-color: #65cbfc; color: #ffffff; text-transform: uppercase; margin: 10px; text-align: center; line-height: 50px;} 
+
+.btnSlideIco{ float: left; width: 30px; height: 30px; margin-top: 10px; margin-left: 20px; }
+
+.textSlideIco{ float: left; margin-left: 10px;}
+
+.btnSlide:hover{cursor: pointer; background-color: #0e1388}
+
+.blocF{border:1px solid #74c5fd;height: 250px; padding: 0px; overflow: hidden; margin: 20px;}
+
+.blocF:hover{ cursor: pointer;}
+
+.blocF2{border:1px solid #006699;height: 250px; padding: 0px; overflow: hidden; margin: 20px;}
+
+.blocF2:hover{ cursor: pointer;}
+
+.text_blocF{position: absolute;height: 50px; background-color: #74c5fd; width: 100%;  top: 80%;}
+
+.text_blocF2{position: absolute;height: 50px; background-color: #006699; width: 100%;  top: 80%;}
+
+.text_2_blocF{float: right;height: 50px; line-height: 50px; margin-right: 30px; font-weight: bold; font-size: 24px; color: #ffffff;}
+

@@ -1,0 +1,360 @@
+{% set localeName = app.request.get('_locale')|default('fr') %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ "home_title"|trans({}, 'app') }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/monthly.css')}}"/>
+    <style type="text/css">
+        #mycalendar {
+            width: 100%;
+            margin: 2em auto 0 auto;
+            max-width: 80em;
+            border: 1px solid #666;
+        }
+</style>
+{% endblock %}
+
+{% block section %}
+    <section class="intro_section page_mainslider ds">
+        <div class="flexslider" data-nav="false" style=" background-color:white; border-top:3px #64cbfc solid; margin-bottom: -60px;">
+            <ul class="slides">
+                {% set folder = media_folder_by_slug('home-slides') %}
+                {% for id in folder.files %}
+                    {% set slide = media_file(id) %}
+                    <li>
+                        <img src="{{ slide.path|imagine_filter('thumb', {"thumbnail": {"size": [1590, 400] }}) }}" alt="">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="slide_description_wrapper">
+                                        <div class="row col-lg-12" style="height:300px;"></div> 
+                                        <div class="row">
+                                            <div class="cadreBtnSlide col-lg-4" style="">	
+                                                <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'presentation-cea-ensea'}) }}">	
+                                                    <div class="btnSlide">
+                                                        <div class="btnSlideIco">
+                                                            <img border="0" src="{{ asset('bundles/app/images/obj.png') }}" alt=""/>
+                                                        </div>
+                                                        <div class="textSlideIco">CEA-ENSEA</div>
+                                                    </div>	
+                                                </a>		
+                                                <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'concours-d-entree'}) }}">
+                                                    <div class="btnSlide" style="">
+                                                        <div class="btnSlideIco"><img src="{{ asset('bundles/app/images/prix.png') }}" alt=""></div>
+                                                        <div class="textSlideIco">Concours d'entrée</div>
+                                                    </div>
+                                                </a>
+                                                <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'partenaires'}) }}">
+                                                    <div class="btnSlide" style="">
+                                                        <div class="btnSlideIco"><img src="{{ asset('bundles/app/images/part.png') }}" alt=""></div> 
+                                                        <div class="textSlideIco">Partenaires</div>
+
+                                                    </div>
+                                                </a>
+                                            </div>                
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- eof flexslider -->
+    </section>
+    <section>
+        <div class="contain_bt_mob col-lg-4" style=""> 
+            <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'presentation-cea-ensea'}) }}">
+                <div class="btnSlide">
+                    <div class="btnSlideIco">
+                        <img border="0" src="{{ asset('bundles/app/images/obj.png') }}" alt=""/>
+                    </div>
+                    <div class="textSlideIco">CEA-ENSEA</div>
+                </div>
+            </a>
+            <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'concours-d-entree'}) }}">
+                <div class="btnSlide" style="">
+                    <div class="btnSlideIco"><img src="{{asset('bundles/app/images/prix.png')}}" alt=""></div>
+                    <div class="textSlideIco">Concours d'entrée</div>
+                </div>
+            </a>
+            <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': 'partenaires'}) }}">
+                <div class="btnSlide" style="">
+                    <div class="btnSlideIco"><img src="{{asset('bundles/app/images/part.png')}}" alt=""></div> 
+                    <div class="textSlideIco">Partenaires</div>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+    <!--News and Videos-->
+    <section class="ls section_padding_bottom_10 columns_margin_bottom_30" >
+        <div class="container">
+            <div class="row">
+                <!--News-->
+                <div class="col-md-4" style="padding-top:10px">
+                    <div class="rounded overflow_hidden">
+                        <div class="with_padding gradient_bg_color heading_wrappper">
+                            <h5 class="text-uppercase margin_0">{{ "news"|trans({}, 'app') }}</h5>
+                        </div>
+                        
+                        {% set page = static_page_by_slug('actualités') %}
+                        {% set translatable = translation_translatable(page) %}
+                        {% set locale = translation_locale(localeName) %}
+                        {% set pageSlug = translation(translatable, locale, 'slug')|default(page.slug) %}
+                            
+                        {% set posts = blog_posts(5, 'DESC') %}
+                        <div class="with_padding with_background">
+                            <div class="widget widget_slider widget_featured_posts">
+                                <div class="owl-carousel" data-nav="true" data-loop="true" data-autoplay="true" data-items="1" data-responsive-lg="1" data-responsive-md="1" data-responsive-sm="1" data-responsive-xs="1">	
+                                    <ul>
+                                        {% for post in posts %}
+                                            <li class="media big-left-media">
+                                                <div class="media-left media-middle">
+                                                    <img class="img_act" src="{{ post.picture }}" alt="">
+                                                </div>
+                                                <div class="media-body media-middle">
+                                                    <h4>
+                                                        {% set translatable = translation_translatable(post) %}
+                                                        {% set locale = translation_locale(localeName) %}
+                                                        {% set name = translation(translatable, locale, 'name')|default(post.name) %}
+                                                        {% set description = translation(translatable, locale, 'description')|default(post.description) %}
+                                                        {% set slug = translation(translatable, locale, 'slug')|default(post.slug) %}
+                                                        
+                                                        <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': pageSlug}) }}">
+                                                            {{ name }}
+                                                        </a>
+                                                    </h4>
+                                                    <p class="small-text highlight highlightlinks">
+                                                        {#<a href="#">Admin</a>,#}
+                                                        <a href="{{ path('app_blog_post', {'_locale': localeName, 'pageSlug': pageSlug, 'postSlug': slug}) }}" >
+                                                            <time class="entry-date" datetime="{{ post.createdAt|date('d-m-Y') }}">
+                                                                {{ post.createdAt|date('d-m-Y') }}
+                                                            </time>
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="with_padding gradient_bg_color heading_wrappper">
+                            <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': pageSlug}) }}">
+                                <h5 class="text-uppercase margin_0">{{ "show_more.news"|trans({}, 'app') }}</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--Videos-->
+                <div class="col-md-8" style="padding-top:0px;">
+                    <div class="container" style="padding-top:0px;">
+                        <div class="row videos_box" style="padding-top:0px;">
+                            {% set folder = media_folder_by_slug('gallery-videos') %}
+                            {% if folder is not empty %}
+                                {% for id in folder.files %}
+                                    {% set video = media_file(id) %}
+                                    {% if video is not empty %}
+                                        <div class="col-md-12" style="padding-top:0;">
+                                            <div class="owl-carousel" data-responsive-lg="2" data-responsive-md="2" data-responsive-sm="1">
+                                                <iframe width="100%" height="185" src="{{ video.path }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                                                <article class="vertical-item content-padding with_border rounded">
+                                                    <div class="item-media top_rounded overflow_hidden">
+                                                        <div class="media-links">
+                                                            <a href="" class="abs-link"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-content">
+                                                        <header class="">
+                                                            <h6 class="">
+                                                                {% set translatable = translation_translatable(video) %}
+                                                                {% set locale = translation_locale(localeName) %}
+                                                                {{ translation(translatable, locale, 'caption')|default(video.caption) }}
+                                                            </h6>
+                                                        </header>
+                                                    </div>
+                                                </article>
+                                            </div>          
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="with_padding gradient_bg_color heading_wrappper rounded">
+                        {% set page = static_page_by_slug('gallery-videos') %}
+                        {% set translatable = translation_translatable(page) %}
+                        {% set locale = translation_locale(localeName) %}
+                        {% set pageSlug = translation(translatable, locale, 'slug')|default(page.slug) %}
+                        
+                        <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': pageSlug}) }}">
+                            <h5 class="text-uppercase margin_0">{{ "show_more.videos"|trans({}, 'app') }}</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <center><h2 class="txt_part text-uppercase">{{ "galleries"|trans({}, 'app') }}</h2></center>
+    <section class="ls section_padding_top_130">
+        <div class="container">
+            <div class="row" style="margin-top: -129px;">
+                <div class="col-md-12">
+                    <div id="gallery-owl-carousel" class="owl-carousel dots-center with_background_items" data-dots="true" data-items="4" data-responsive-lg="4" data-responsive-md="2" data-responsive-sm="2" data-responsive-xs="1">
+                        {% set galleries = media_folders_by_tag('gallery-pictures') %}
+                        {% if galleries is not empty %}
+                            {% for gallery in galleries %}
+                                {% if gallery.files is not empty %}
+                                    {% set picture = media_file(gallery.files|first) %}
+                                    {% if picture is not empty %}
+                                        <article class="vertical-item content-padding post format-standard with_border rounded text-center">
+                                            <div class="item-media">
+                                                <img src="{{ picture.path }}" alt="">
+                                                <div class="media-links">
+                                                    <div class="links-wrap">
+                                                        <a href="{{ path('app_static_page',{'_locale': localeName, 'slug':gallery.slug}) }}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="item-content">
+                                                <header class="entry-header">
+                                                    <p class="categories-links small-text">
+                                                        <a style="color:black" href="{{ path('app_static_page',{'_locale': localeName, 'slug':gallery.slug}) }}">
+                                                            {% set translatable = translation_translatable(gallery) %}
+                                                            {% set locale = translation_locale(localeName) %}
+                                                            {{ translation(translatable, locale, 'caption')|default(gallery.name) }}
+                                                        </a>
+                                                    </p>
+                                                </header>
+                                                {% set translatable = translation_translatable(gallery) %}
+                                                {% set locale = translation_locale(localeName) %}
+                                                {% set description = translation(translatable, locale, 'caption')|default(gallery.description) %}
+
+                                                {% if description|length >= 100 %}
+                                                    {{ description|slice(0,100) }}...
+                                                {% else %}
+                                                    {{ description }}
+                                                {% endif %}
+                                            </div>
+
+                                        </article>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 3em;margin-top: 3em" class="text-center">
+                <h4 class="text-uppercase">
+                    {% set page = static_page_by_slug('gallery-pictures') %}
+                    {% set translatable = translation_translatable(page) %}
+                    {% set locale = translation_locale(localeName) %}
+                    {% set pageSlug = translation(translatable, locale, 'slug')|default(page.slug) %}
+                    
+                    <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': pageSlug}) }}">
+                        {{ "show_more.galleries"|trans({}, 'app') }}
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </section>
+    <section class="ls section_padding_top_130 section_padding_bottom_130" style="background-color:#f7f7f7; border:1px #dcdddd solid;">
+        <div class="container">
+            <div class="row" style="margin-top: -50px;">
+                <h2 class="txt_part text-uppercase text-center">{{ "agenda"|trans({}, 'app') }}</h2> 
+                <div class="col-md-8">
+                    <div id="gallery-owl-carousel" class="owl-carousel dots-center with_background_items" data-dots="true" data-items="2" data-responsive-lg="2" data-responsive-md="2" data-responsive-sm="2" data-responsive-xs="1">
+                        {% set moments = calendar_moments(4, 'DESC') %}
+                        {% for moment in moments %}
+                            <article class="vertical-item content-padding post format-standard with_border rounded text-center" style="border:1px #dcdddd solid">
+                                <div class="item-media">
+                                    <img src="{{ moment.picture|imagine_filter('thumb', {"thumbnail": {"size": [400, 250] }}) }}" alt="{{ moment.title }}">
+                                </div>
+                                <div class="item-content">
+                                    <header class="entry-header">
+                                        <p class="categories-links small-text">
+                                            {% set translatable = translation_translatable(moment) %}
+                                            {% set locale = translation_locale(localeName) %}
+                                            
+                                            {% set page = static_page_by_slug('concours-d-entree') %}
+                                            {% set translatable = translation_translatable(page) %}
+                                            {% set locale = translation_locale(localeName) %}
+                                            {% set pageSlug = translation(translatable, locale, 'slug')|default(page.slug) %}
+                                            
+                                            <a href="{{ path('app_static_page', {'_locale': localeName, 'slug': pageSlug}) }}">
+                                                {{ translation(translatable, locale, 'title')|default(moment.title) }}
+                                            </a>
+                                        </p>
+                                    </header>
+                                    <div class="entry-meta with_top_border darklinks text-left">
+                                        <div class="col-md-6">
+                                            <div class="small-text">
+                                                <i class="fa fa-calendar rightpadding_5 highlight" aria-hidden="true"></i>
+                                                {{ moment.startedAt|date('d/m/Y') }}
+                                            </div>
+                                            <div class="small-text">
+                                                <i class="fa fa-clock-o rightpadding_5 highlight" aria-hidden="true"></i>
+                                                {{ moment.startedAt|date('H:i') }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="small-text">
+                                                <i class="fa fa-calendar rightpadding_5 highlight" aria-hidden="true"></i>
+                                                {{ moment.endedAt|date('d/m/Y') }}
+                                            </div>
+                                            <div class="small-text">
+                                                <i class="fa fa-clock-o rightpadding_5 highlight" aria-hidden="true"></i>
+                                                {{ moment.endedAt|date('H:i') }}
+                                            </div>
+                                        </div>
+                                        <p class="small-text text-center">	
+                                            <span>
+                                                <i class="fa fa-location-arrow rightpadding_5 highlight" aria-hidden="true"></i>
+                                                {{ moment.location }}
+                                            </span>										
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="txt_part text-uppercase">{{ "calendar"|trans({}, 'app') }}</h4>
+                    <div id="calendar" class="monthly"></div>
+                    <input type="hidden" id="list_moments_url" value="{{ url('app_calendar_moments') }}">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/monthly.js')}}"></script>
+    <script>
+        var data = [];
+        var url = $("#list_moments_url").val();
+        
+        $.post(url, {agenda_slug: 'calendar-agenda-concours'}, function(response){
+            data = response;
+        });
+        
+        $(window).load( function() {
+            $('#calendar').monthly({
+                mode: 'event',
+                dataType: 'json',
+                events: {
+                    "monthly": data
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-tap-highlight" content="no"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}Puzzle{% endblock %}</title>
+
+        {% block stylesheets %}
+            {% stylesheets 
+                'bundles/admin/libs/codemirror/lib/codemirror.css'
+                'bundles/admin/libs/uikit/css/uikit.almost-flat.min.css'
+                'bundles/admin/icons/flags/flags.min.css'
+                'bundles/admin/css/main.css'
+                'bundles/admin/libs/font-awesome/css/font-awesome.min.css' 
+                filter='cssrewrite' 
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" media="all" />
+            {% endstylesheets %}
+        {% endblock %}
+
+    </head>
+    <body class=" sidebar_main_open sidebar_main_swipe">
+        {% block body %}
+            {% block header %}
+                  <header id="header_main">
+                      <div class="header_main_content">
+                          <nav class="uk-navbar">
+                                              
+                              <!-- main sidebar switch -->
+                              <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                                  <span class="sSwitchIcon"></span>
+                              </a>
+                              
+                              <!-- secondary sidebar switch -->
+                              <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                                  <span class="sSwitchIcon"></span>
+                              </a>
+                              <div class="uk-navbar-flip">
+                                  <ul class="uk-navbar-nav user_actions">
+                                      {% if searchEnabled is defined and searchEnabled == 1 %}
+                                        <li><a href="#" id="main_search_btn" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE8B6;</i></a></li>
+                                      {% endif %}
+                                      <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                                          {{ render(controller("AdminBundle:Helper:notifications"))}}
+                                      </li>
+                                      <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                                        <a href="#" class="user_action_image uk-text-large" data-uk-tooltip={'pos':'top'} title="Mon compte">
+                                            <i class="material-icons md-24 md-light">&#xE853;</i>
+                                        </a>
+                                        <div class="uk-dropdown uk-dropdown-large">
+                                            <ul class="uk-nav js-uk-prevent">
+                                                <li class="uk-text-center uk-text-large uk-text-bold">
+                                                  <span class="md-user-letters md-bg-cyan">
+                                                      {{ app.user.firstName|capitalize[:1] }}{{ app.user.lastName|capitalize[:1] }}
+                                                  </span>
+                                                  {{ app.user.firstName|capitalize }} {{ app.user.lastName }}
+                                                </li>
+                                                <hr>
+                                                <li>
+                                                  <a href="{{url('account_profile')}}" class="md-btn md-btn-flat md-btn-block">
+                                                    <i class="material-icons">&#xE851;</i>
+                                                    Mon compte
+                                                  </a>
+                                                </li>
+                                                <li>
+                                                  <a href="{{url('logout', {'scope': 'admin'})}}" class="md-btn md-btn-flat md-btn-block">
+                                                    <i class="material-icons">&#xE8AC;</i>
+                                                    Déconnexion
+                                                  </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </nav>
+                      </div>
+                      {% if searchEnabled is defined and searchEnabled == 1 %}
+                        <div class="header_main_search_form">
+                            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+                            <form class="uk-form" method="GET">
+                                <input type="text" class="header_main_search_input" name="search" placeholder="{% block formsearchplaceholder %}{% endblock %}" />
+                                <button class="header_main_search_btn uk-button-link" type="submit"><i class="md-icon material-icons">&#xE8B6;</i></button>
+                            </form>
+                        </div>
+                      {% endif %}
+                  </header>
+            {% endblock %}
+            {% block side %}
+                <aside id="sidebar_main">
+                    <div class="sidebar_main_header">
+                        <div class="sidebar_logo">
+                            <a href="{{ url('admin_homepage') }}" class="sSidebar_hide"><img src="{{asset('bundles/admin/img/logo_main.png')}}" alt="" width="90%"/></a>
+                            <a href="{{ url('admin_homepage') }}" class="sSidebar_show"><img src="{{asset('bundles/admin/img/logo_main_small.png')}}" alt="" height="32" width="32"/></a>
+                        </div>
+                        {# <div class="sidebar_actions">
+                            <select id="lang_switcher" name="lang_switcher">
+                                <option value="gb" selected>English</option>
+                            </select>
+                        </div> #}
+                    </div>
+                    <div class="menu_section">
+                         <ul>
+                            <li {% if active == "dashboard" %}class="current_section"{% endif %}>
+                                <a href="{{url('admin_homepage')}}">
+                                    <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                                    <span class="menu_title">Tableau de bord</span>
+                                </a>
+                            </li>
+                            {{ render(controller("AdminBundle:Helper:menu", {'active': active, 'subactive': subactive})) }}
+                            <li {% if active == "admin" %}class="act_section current_section"{% endif %}>
+                                <a href="#">
+                                    <span class="menu_icon"><i class="material-icons">settings</i></span>
+                                    <span class="menu_title">Adminstration</span>
+                                </a>
+                                <ul>
+                                    <li {% if subactive == "admin_users" %}class="act_item"{% endif %}><a href="{{ url('admin_users')}}">Utilisateurs</a></li>
+                                    <li {% if subactive == "admin_modules" %}class="act_item"{% endif %}><a href="{{ url('admin_modules')}}">Modules</a></li>
+                                    <li {% if subactive == "admin_settings" %}class="act_item"{% endif %}><a href="{{ url('admin_settings')}}">Réglages</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            {% endblock %}
+            {% block content %}{% endblock %}
+            {% block footer %}{% endblock %}
+        {% endblock %}
+        {% block javascripts %}
+            <script>
+                WebFontConfig = {
+                    google: {
+                        families: [
+                            'Source+Code+Pro:400,700:latin',
+                            'Roboto:400,300,500,700,400italic:latin'
+                        ]
+                    }
+                };
+                (function() {
+                    var wf = document.createElement('script');
+                    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                    wf.type = 'text/javascript';
+                    wf.async = 'true';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(wf, s);
+                })();
+            </script>
+            {% javascripts 
+                'bundles/admin/js/common.min.js'
+                'bundles/admin/js/uikit_custom.min.js'
+                'bundles/admin/js/altair_admin_common.min.js'
+                'bundles/admin/libs/parsleyjs/dist/parsley.min.js'
+                output="compile/js/base_admin.min.js" 
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <script>
+                altair_forms.parsley_validation_config();
+                altair_forms.parsley_extra_validators();
+                $(function() {
+                    altair_helpers.retina_images();
+                    if(Modernizr.touch) {
+                        FastClick.attach(document.body);
+                    }
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html>

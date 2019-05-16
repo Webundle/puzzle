@@ -1,0 +1,3 @@
+app_calendar_moments:
+    path:     /calendar/moments
+    defaults: { _controller: AppBundle:Calendar:showMoments, _locale: fr  }

@@ -1,0 +1,20 @@
+app_expertise_services:
+    path:     /services
+    defaults: { _controller: AppBundle:Expertise:showServices, _locale: fr  }
+
+app_expertise_service:
+    path:     /services/{id}
+    defaults: { _controller: AppBundle:Expertise:showService }
+
+app_expertise_projects:
+    path:     /projects
+    defaults: { _controller: AppBundle:Expertise:showProjects }
+
+app_expertise_project:
+    path:     /projects/{id}
+    defaults: { _controller: AppBundle:Expertise:showProject }
+
+
+app_expertise_send_request:
+    path:     /services/request/send
+    defaults: { _controller: AppBundle:Expertise:sendRequest }

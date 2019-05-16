@@ -1,0 +1,14 @@
+<div class="col-md-12" style="margin-top:30px;padding-left:0px">
+    <nav class="mainmenu_wrapper">
+        <ul class="mainmenu nav sf-menu">
+            {% if menu is not empty and menuItems is not empty %}
+                {% for menuItem in menuItems %}
+                    {{ render(controller("AppBundle:Helper:menuItem", {'id': menuItem.id})) }}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
+    <span class="toggle_menu">
+        <span></span>
+    </span>
+</div>

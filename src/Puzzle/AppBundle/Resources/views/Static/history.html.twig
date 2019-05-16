@@ -1,0 +1,93 @@
+{% trans_default_domain 'app' %}
+
+{% set translatable = translation_translatable(page) %}
+{% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+{% set name = translation(translatable, locale, 'name')|default(page.name) %}
+{% set content = translation(translatable, locale, 'content')|default(page.content) %}
+{% set slug = translation(translatable, locale, 'slug')|default(page.slug) %}
+
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/app/dist/slick/slick/slick-theme.css')}}"/>
+{% endblock %}
+
+{% block section %}
+    <section class="page_breadcrumbs cs gradient2 parallax section_padding_top_50 section_padding_bottom_50">
+        <div class="container" style="padding-top:10px;padding-bottom: 10px">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="text-white">{{ name|upper }}</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container mt-30 pt-30 mb-30 pb-30">
+        {{ content|raw }}
+        <div class="row pt-30">
+            {% set staffs = expertise_staffs_by_tag('history') %}
+            {% for staff in staffs %}
+                {% set translatable = translation_translatable(staff) %}
+                {% set locale = translation_locale(app.request.get('_locale')|default('fr')) %}
+                {% set position = translation(translatable, locale, 'position')|default(staff.position) %}
+                {% set description = translation(translatable, locale, 'description')|default(staff.description) %}
+                <div class="col-md-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="{{ staff.picture }}" class="img-circle">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <center>
+                                <div class="col-md-12">
+                                    <b><font color="#023f88">{{ staff.fullName }}</font></b>
+                                </div>
+                                <div class="col-md-12">
+                                    <b><font size="2pt">{{ description }}</font></b>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="modal fade" id="show-more" tabindex="-1" role="dialog" aria-labelledby="slide1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body" id="show-more-content"></div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" aria-hidden="true">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{  parent() }}
+    {% javascripts 
+        'bundles/app/dist/slick/slick/slick.min.js'
+
+        output="compiled/js/history.min.js" 
+        %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $('.slick').slick({
+            dots: true,
+            arrows: true,
+        });
+        
+        $(".slider").click(function(e){
+            var btnId = $(this).attr('id');
+            var slideId = btnId.replace('btn-', '');
+            $("#show-more-content").html($('#' + slideId).html());
+            $('#show-more').modal('show');
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{
+    "name" : "puzzle/app-bundle",
+    "description" : "An app bundle demo",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Qwincy Percy",
+        "email" : "qwincypercy@fermentuse.com"
+    }],
+    "keywords" : [
+        "bundle app demo"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {},
+    "autoload" : {
+        "psr-0" : {
+            "Puzzle\\AppBundle" : ""
+        }
+    },
+    "target-dir" : "Puzzle/AppBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "some_version-dev"
+        }
+    }
+}

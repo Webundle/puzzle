@@ -1,0 +1,7 @@
+app_newsletter_add_subscriber:
+    path:     /newsletter/subscribe/add
+    defaults: { _controller: AppBundle:Newsletter:addSubscriber }
+
+app_newsletter_create_contact:
+    path:     /newsletter/contact/create
+    defaults: { _controller: AppBundle:Newsletter:createContact }
